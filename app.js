@@ -177,6 +177,11 @@ router.get('/png/:plantstr', ctx => {
   ctx.set('Content-Type', 'image/png');
 });
 
+router.get('/uml/:plantstr', ctx => {
+  ctx.body = ctx.req.pipe(convertRoute(ctx, 'uml'));
+  ctx.set('Content-Type', 'text/html; charset=UTF-8');
+});
+
 app.use(router.routes());
 app.use(router.allowedMethods());
 
