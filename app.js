@@ -157,7 +157,7 @@ function convertRoute(ctx, filetype) {
     return;
   }
 
-  if (plain.matchAll(/^project starts/)) {
+  if (plain.match(/^project starts/gm)) {
     plain = convertGantt(plain);
     plantstr = plantumlEncoder.encode(plain);
   }
