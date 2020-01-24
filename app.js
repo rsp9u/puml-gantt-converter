@@ -146,7 +146,7 @@ Parameter(app)
 function convertRoute(ctx, filetype) {
   console.log("[INFO] received a request");
 
-  const plantstr = ctx.params['plantstr'];
+  let plantstr = ctx.params['plantstr'];
   //console.log(`plant encoded str is following; "${plantstr}`)
 
   try {
@@ -159,12 +159,11 @@ function convertRoute(ctx, filetype) {
 
   if (plain.matchAll(/^project starts/)) {
     plain = convertGantt(plain);
+    plantstr = plantumlEncoder.encode(plain);
   }
 
-  const encoded = plantumlEncoder.encode(plain);
-
   const plantServer = process.env.PGC_PLANTUML_SERVER;
-  return request(`${plantServer}/${filetype}/${encoded}`);
+  return request(`${plantServer}/${filetype}/${plantstr}`);
 }
 
 router.get('/svg/:plantstr', ctx => {
